@@ -1,0 +1,41 @@
+
+checks to see if we can create a string that is lexicographically larger than given string. Returns string is possible.
+new string has the smallest possible increase in size.
+We do it be scanning pairs of letters from right to left looking for a case where the left letter is less than the right letter, and the
+left letter is as far to the right as possible
+
+we can reduce how far to the left we look each time for example
+jtfoplr
+r is larger than l,p,o,f and t so we skip those it's smaller than t so we stop there and try the next letter - l.
+l is smaller than p so we stop there. There isn't any point looking further to the left as we want pairs as far to the right as possible.
+
+
+
+def biggerIsGreater(w):
+  s = [i for i in w]
+  if s == sorted(s, reverse=True):
+    return 'no answer'
+  t = []
+  r = []
+  indexes = (999999,0)
+  count = 0
+  i = 1
+  k = len(s) +1
+  while i < len(s):
+    for j in range(i+1,k):
+      if s[-j] < s[-i]:
+        if j < indexes[0]:
+          indexes =(j,i)
+          k = j
+          break
+      
+        
+    i+=1
+  
+  
+  s[-indexes[0]],s[-indexes[1]] = s[-indexes[1]],s[-indexes[0]]
+  t  = s[:-indexes[0]+1] + sorted(s[(-(indexes[0]-1)):])
+ 
+  return ''.join(t)
+  
+  
