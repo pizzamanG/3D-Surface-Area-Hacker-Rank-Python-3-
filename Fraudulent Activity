@@ -1,0 +1,52 @@
+dat = [2 ,3,4,2,3,6,8,4,5]
+
+This is able to calculate a running median for a large number of data points, First a frequency table is initialised,
+then we move over the data points one by one, reducing the count of the firt data point by one, and increasing the count of the most current
+data point by 1
+def activityNotifications(data, n):
+  median = (n+1)//2
+  count = [0] * 201
+  score =0
+  for i in data[:n]:
+    count[i] +=1
+  for i in count[1:]:
+    i += (i-1)
+
+  if n %2 !=0:
+  
+    for i in range(n, len(data)):
+        s = 0
+        q = 0
+        for j in range(len(count)):
+          s += count[j]
+          if s >= median:
+            if 2*j  <= data[i]:
+              score +=1
+            break
+        count[data[i-n]] -=1
+        count[data[i]] +=1
+  else:
+    medians = [median-1, median]
+    for i in range(n, len(data)):
+        
+        median_components = []
+        
+        for k in medians:
+          s = 0
+
+          for j in range(len(count)):
+              s += count[j]
+              if s > k:
+                median_components.append(j)
+                break
+         
+        count[data[i-n]] -=1
+        count[data[i]] +=1
+      
+       
+        if 2* ( sum(median_components)/2) <= data[i]:
+          score +=1
+
+
+  return score
+      
